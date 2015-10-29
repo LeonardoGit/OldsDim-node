@@ -1,0 +1,152 @@
+<div class="sweet">
+    <div class="modal-header">
+        <h4 class="modal-title text-left"><i class="ti-settings"></i> Theme Setting</h4>
+    </div>
+    <div class="modal-body">
+        <div class="row margin-top-20">
+            <div class="col-md-12">
+                <tabset tab-theme="default" tab-position="left">
+                    <tab heading="Choose Theme">
+                        <div class="tab-content padding-20">
+                            <form class="theme-setting">
+                                <div class="form-group">
+                                    <select class="form-control">
+                                        <option value="1">Deafult</option>
+                                        <option value="1">Deafult</option>
+                                        <option value="1">Deafult</option>
+                                    </select>
+                                </div>
+
+                                <div class="form-group">
+                                    <div class="option pull-left" style="font-size: 16px; color: #9e9e9e;">Invert Colors</div>
+                                    <div class="btn btn-default pull-right">
+                                        <input type="checkbox" class="switchery-sm" checked ui-switch="{color: $parent.getBrandColor('primary')}" ng-init="someModel7=true" ng-model="someModel7" />
+                                    </div>
+                                    <div class="clearfix"></div>
+                                </div>
+
+                                <div class="form-group">
+                                    <div class="option pull-left" style="font-size: 16px; color: #9e9e9e;">Backgroud Colors</div>
+                                    <div class="btn btn-default pull-right" style="width: 35%;">
+                                        <div class="input-group cpicker color" data-color="rgb(255, 146, 180)" data-color-format="rgb">
+                                            <input data-colorpicker type="text" readonly class="form-control" value="" style="margin: 0px; height: 30px;">
+                                            <span class="input-group-addon"><i style="background-color: rgb(255, 146, 180); margin-left: 8px;"></i></span>
+                                        </div>
+                                    </div>
+                                    <div class="clearfix"></div>
+                                </div>
+
+                                <div class="form-group">
+                                    <div class="option pull-left" style="font-size: 16px; color: #9e9e9e;">Backgroud Image</div>
+                                    <div class="btn btn-default pull-right" style="width: 50%;">
+                                       <input class="form-control" type="file" style="margin: 0px; height: 30px; font-size: 12px;">
+                                    </div>
+                                    <div class="clearfix"></div>
+                                </div>
+
+                                <div class="form-group">
+                                    <div class="option pull-left" style="font-size: 16px; color: #9e9e9e;">Borders</div>
+                                    <div class="btn btn-default pull-right">
+                                        <input type="checkbox" class="switchery-sm" checked ui-switch="{color: $parent.getBrandColor('primary')}" ng-init="someModel7=true" ng-model="someModel7" />
+                                    </div>
+                                    <div class="clearfix"></div>
+                                </div>
+
+                                <div class="form-group">
+                                    <div class="option pull-left" style="font-size: 16px; color: #9e9e9e;">Border Color</div>
+                                    <div class="btn btn-default pull-right" style="width: 35%;">
+                                        <div class="input-group cpicker color" data-color="rgb(255, 146, 180)" data-color-format="rgb">
+                                            <input data-colorpicker type="text" readonly class="form-control" value="" style="margin: 0px; height: 30px;">
+                                            <span class="input-group-addon"><i style="background-color: rgb(255, 146, 180); margin-left: 8px;"></i></span>
+                                        </div>
+                                    </div>
+                                    <div class="clearfix"></div>
+                                </div>
+
+                                <div class="form-group">
+                                    <div class="option pull-left" style="font-size: 16px; color: #9e9e9e;">Border Width</div>
+                                    <div class="btn btn-default pull-right" style="width: 40%;">
+                                        <input class="form-control" type="text" style="margin: 0px; height: 30px;">
+                                    </div>
+                                    <div class="clearfix"></div>
+                                </div>
+                            </form>
+
+                        </div>
+
+                    </tab>
+                    <tab>
+                        <tab-heading class="dropdown">
+                            Add New Theme
+                        </tab-heading>
+                        <div class="tab-content padding-20">
+                            <form class="theme-setting">
+                                <div class="form-group">
+                                    <input type="text" class="form-control" style="margin: 0px; height: 30px;">
+                                </div>
+
+                                <div class="form-group">
+                                    <div class="option pull-left" style="font-size: 16px; color: #9e9e9e;">Invert Colors</div>
+                                    <div class="btn btn-default pull-right">
+                                        <input type="checkbox" class="switchery-sm" checked ui-switch="{color: $parent.getBrandColor('primary')}" ng-init="someModel7=true" ng-model="someModel7" />
+                                    </div>
+                                    <div class="clearfix"></div>
+                                </div>
+
+                                <div class="form-group">
+                                    <div class="option pull-left" style="font-size: 16px; color: #9e9e9e;">Backgroud Colors</div>
+                                    <div class="btn btn-default pull-right" style="width: 35%;">
+                                        <div class="input-group cpicker color" data-color="rgb(255, 146, 180)" data-color-format="rgb">
+                                            <input data-colorpicker type="text" readonly class="form-control" value="" style="margin: 0px; height: 30px;">
+                                            <span class="input-group-addon"><i style="background-color: rgb(255, 146, 180); margin-left: 8px;"></i></span>
+                                        </div>
+                                    </div>
+                                    <div class="clearfix"></div>
+                                </div>
+
+                                <div class="form-group">
+                                    <div class="option pull-left" style="font-size: 16px; color: #9e9e9e;">Backgroud Image</div>
+                                    <div class="btn btn-default pull-right" style="width: 50%;">
+                                        <input class="form-control" type="file" style="margin: 0px; height: 30px; font-size: 12px;">
+                                    </div>
+                                    <div class="clearfix"></div>
+                                </div>
+
+                                <div class="form-group">
+                                    <div class="option pull-left" style="font-size: 16px; color: #9e9e9e;">Borders</div>
+                                    <div class="btn btn-default pull-right">
+                                        <input type="checkbox" class="switchery-sm" checked ui-switch="{color: $parent.getBrandColor('primary')}" ng-init="someModel7=true" ng-model="someModel7" />
+                                    </div>
+                                    <div class="clearfix"></div>
+                                </div>
+
+                                <div class="form-group">
+                                    <div class="option pull-left" style="font-size: 16px; color: #9e9e9e;">Border Color</div>
+                                    <div class="btn btn-default pull-right" style="width: 35%;">
+                                        <div class="input-group cpicker color" data-color="rgb(255, 146, 180)" data-color-format="rgb">
+                                            <input data-colorpicker type="text" readonly class="form-control" value="" style="margin: 0px; height: 30px;">
+                                            <span class="input-group-addon"><i style="background-color: rgb(255, 146, 180); margin-left: 8px;"></i></span>
+                                        </div>
+                                    </div>
+                                    <div class="clearfix"></div>
+                                </div>
+
+                                <div class="form-group">
+                                    <div class="option pull-left" style="font-size: 16px; color: #9e9e9e;">Border Width</div>
+                                    <div class="btn btn-default pull-right" style="width: 40%;">
+                                        <input class="form-control" type="text" style="margin: 0px; height: 30px;">
+                                    </div>
+                                    <div class="clearfix"></div>
+                                </div>
+                            </form>
+                        </div>
+                    </tab>
+                </tabset>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-footer">
+        <button type="button" class="btn btn-primary margin-0" data-dismiss="modal" ng-click="modalClose();">Close</button>
+    </div>
+</div>

@@ -1,0 +1,173 @@
+<div class="page-content" ng-controller="DashboardsListCtrl" class="mainview-animation animated">
+	<ul class="list-actions pull-left">
+		<li>
+			<button ui-sref="dashboards.create" class="btn btn-info">
+				<i class="ti-layout-grid3"></i> Create A Dashboard
+			</button>
+		</li>
+        <li ng-class="{'active': view ==='grid'}" class="ml-20">
+        	<i ng-click="view = 'grid'" class="ti-view-grid"></i>
+        </li>
+        <li ng-class="{'active': view === 'list'}">
+        	<i ng-click="view = 'list'" class="ti-view-list"></i>
+        </li>
+    </ul>
+
+    <div ng-show="!loading">
+	    <div class="container-fluid">
+		    <div class="row">
+		        <div class="col-md-12">
+					<div class="panel panel-info">
+						<div class="panel-heading">
+							<h2>{{dashboards.length}} Dashboards</h2>
+							
+							<div class="panel-menu-ctrls">
+					        	<ul class="list-actions pull-left">
+							        <li class="ml-20 mr-0">
+							        	<span>Sort By:</span>
+							        </li>
+							        <li ng-class="{ 'active': predicate === 'title'}">
+							        	<span ng-click="order('title')">Title</span>
+							        	<span class="sortorder" ng-show="predicate === 'title'" ng-class="{reverse:reverse}"></span>
+							        </li>
+							        <li ng-class="{ 'active': predicate === 'modified_by.name'}">
+							        	<span ng-click="order('modified_by.name')">Last Author</span>
+							        	<span class="sortorder" ng-show="predicate === 'modified_by.name'" ng-class="{reverse:reverse}"></span>
+							        </li>
+							        <li ng-class="{ 'active': predicate === 'modified_on'}">
+							        	<span ng-click="order('modified_on')">Last Updated</span>
+							        	<span class="sortorder" ng-show="predicate === 'modified_on'" ng-class="{reverse:reverse}"></span>
+							        </li>
+							        <li ng-class="{ 'active': predicate === 'charts'}">
+							        	<span ng-click="order('charts')">Charts</span>
+							        	<span class="sortorder" ng-show="predicate === 'charts'" ng-class="{reverse:reverse}"></span>
+							        </li>
+							        <li class="ml-20">
+							        	<div class="toolbar-icon-bg" id="toolbar-search">
+									        <div class="input-group">
+								            	<span class="input-group-btn"><button class="btn" type="button"><i class="ti ti-search"></i></button></span>
+												<input ng-model="searchText" type="text" class="form-control" placeholder="Search...">
+											</div>
+									    </div>
+							        </li>
+							    </ul>
+							</div>
+							<div class="panel-ctrls">
+								<label tooltip="Select" class="text-icon">
+									<input type="checkbox" ng-click="selectAllDashboards(selectAll);" ng-model="selectAll">
+								</label>
+								<span tooltip="Delete" class="button-icon">
+					        		<i ng-click="deleteAllDashboards()" class="ti-trash"></i>
+					        	</span>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div ng-show="displayView('list')" class="container-fluid">
+		    <div class="row">
+		        <div class="col-md-12">
+					<div class="panel panel-default" data-widget='{"draggable": "false"}'>
+						<div class="panel-body scroll-pane panel-no-padding" style="height: 65vh;">
+							<div class="scroll-content">
+								<table class="table table-hover table-striped">
+				                    <thead></thead>
+				                    <tbody>
+				                        <tr ng-repeat="dashboard in dashboards | filter:searchText | orderBy:predicate:reverse">
+				                            <td width="120">
+				                            	<img class="thumbnail" data-ng-src="app/assets/img/dashboard.png">
+				                            </td>
+				                            <td>
+				                            	<span tooltip="View Dashboard">
+				                            		<i class="ti-pie-dashboard"></i> <b>{{ dashboard.title }}</b>
+				                            	</span>
+				                            </td>
+				                            <td>
+				                            	<span tooltip="Last Author">
+				                            		<i class="ti-user"></i> {{ dashboard.modified_by.name }}
+				                            	</span><br>
+				                            	<span tooltip="Last Updated">
+				                            		<i class="ti-time"></i> {{ dashboard.modified_on | date:'medium'}}
+				                            	</span>
+				                            </td>
+				                            <td>
+				                            	<span tooltip="Charts">
+				                            		<i class="ti-pie-chart"></i> {{ dashboard.chart_ids.length }} Charts
+				                            	</span>
+				                            </td>
+				                            <td width="145">
+				                            	<ul class="list-actions">
+				                            		<li tooltip="Share">
+				                            			<i ng-click="shareDashboard(dashboard._id)" class="ti-share"></i>
+				                            		</li>
+				                            		<li ng-click="editDashboard(dashboard._id)" tooltip="Edit">
+				                            			<i class="ti-pencil-alt"></i>
+				                            		</li>
+				                            		<li tooltip="Delete">
+				                            			<i ng-click="deleteDashboard(dashboard)" class="ti-trash"></i>
+				                            		</li>
+				                            		<li>
+														<label tooltip="Select">
+															<input type="checkbox" ng-click="selectDashboard(dashboard)" ng-checked="selected(dashboard)" checked>
+														</label>
+						                            </li>
+						                        </ul>
+				                            </td>
+				                        </tr>
+				                    </tbody>
+				                </table>
+							</div>
+						</div>
+					</div>
+		        </div>
+			</div>
+		</div>
+
+		<div ng-if="displayView('grid')" class="container-fluid mt-20" style="clear: both;">
+			<div class="row">
+				<div class="col-sm-4" ng-repeat="dashboard in dashboards | filter:searchText | orderBy:predicate:reverse">
+	                <div class="panel panel-default" style="visibility: visible">
+						<div class="panel-heading">
+							<div class="panel-ctrls pull-left">
+					        	<span class="button-icon has-bg">
+					        		<i class="ti-time"></i>
+					        	</span>
+					        	<span tooltip="Last User" class="button-icon has-bg">
+					        		<i class="ti-user"></i>
+					        	</span>
+					        	<span tooltip="Download CSV" class="button-icon has-bg">
+					        		<i class="fa fa-file-excel-o"></i>
+					        	</span>
+					        	<span tooltip="View Dashboard" class="button-icon has-bg">
+					        		<i class="ti-pie-dashboard"></i>
+					        	</span>
+	                    	</div>
+							
+							<div class="panel-ctrls">
+								<label tooltip="Select" class="text-icon">
+									<input type="checkbox" ng-click="selectDashboard(dashboard)" ng-checked="selected(dashboard)" checked>
+								</label>
+					        	<span tooltip="Delete" class="button-icon has-bg">
+					        		<i ng-click="deleteDashboard(dashboard)" class="ti-trash"></i>
+					        	</span>
+					        	<span tooltip="Edit" class="button-icon has-bg">
+					        		<i class="ti ti-pencil-alt"></i>
+					        	</span>
+					        	<span tooltip="Share" class="button-icon has-bg">
+					        		<i ng-click="shareDashboard(dashboard._id)" class="ti-share"></i>
+					        	</span>
+					        </div>
+						</div>
+						<div class="panel-body" style="height: 240px; position: relative;">
+							<div style="height: 100%; width: inherit;">
+		                        <img style="width: 275px;" data-ng-src="app/assets/img/dashboard.png" />
+		                    </div>
+						</div>
+					</div>
+	            </div>
+			</div>
+		</div>
+	</div>
+</div>

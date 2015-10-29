@@ -1,0 +1,27 @@
+<div class="sweet">
+	<div class="modal-header modal-header-icon">
+		<div ng-show="loading">
+			<i class="fa fa-plus text-success"></i>
+		</div>
+		<div ng-show="deleting">
+			<i class="fa fa-spinner fa-spin text-muted load"></i>
+		</div>
+		<div ng-hide="loading">
+			<i ng-show="loadSuccess" class="fa fa-check-circle-o load-success"></i>
+			<i ng-show="loadError" class="fa fa-exclamation-circle load-error"></i>
+		</div>
+		<h2>Create Role</h2>
+	</div>
+	<div class="modal-body">
+		<div class="row" ng-show="loading">
+			<div class="form-group">
+				<div class="col-sm-8 col-sm-offset-2">
+					<input type="text" ng-model="roleName" class="form-control" placeholder="Role Name"/>
+				</div>
+			</div>
+		</div>
+		<div ng-show="!loading" class="message">{{ message }}</div>
+		<button ng-show="loading" ng-click="createRole()"  class="btn btn-success ng-hide" tabindex="1">Create</button>
+		<button ng-show="!loading" ng-click="close()"  class="btn confirm ng-hide" tabindex="1">OK</button>
+	</div>
+</div>

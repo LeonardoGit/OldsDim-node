@@ -1,0 +1,181 @@
+<div class="page-content" ng-controller="FilesListCtrl" class="mainview-animation animated">
+	<ul class="list-actions pull-left">
+		<li>
+			<button ng-click="uploadFiles()" class="btn btn-orange">
+				<i class="ti-file"></i> Upload Files
+			</button>
+		</li>
+        <li ng-class="{'active': view ==='grid'}" class="ml-20">
+        	<i ng-click="view = 'grid'" class="ti-view-grid"></i>
+        </li>
+        <li ng-class="{'active': view === 'list'}">
+        	<i ng-click="view = 'list'" class="ti-view-list"></i>
+        </li>
+    </ul>
+
+    <div ng-show="!loading">
+	    <div class="container-fluid">
+		    <div class="row">
+		        <div class="col-md-12">
+					<div class="panel panel-orange">
+						<div class="panel-heading">
+							<h2>{{files.length}} Charts</h2>
+							
+							<div class="panel-menu-ctrls">
+					        	<ul class="list-actions pull-left">
+							        <li class="ml-20 mr-0">
+							        	<span>Sort By:</span>
+							        </li>
+							        <li ng-class="{ 'active': predicate === 'data.fileSettings.title'}">
+							        	<span ng-click="order('data.fileSettings.title')">Title</span>
+							        	<span class="sortorder" ng-show="predicate === 'data.fileSettings.title'" ng-class="{reverse:reverse}"></span>
+							        </li>
+							        <li ng-class="{ 'active': predicate === 'data.fileSettings.csv.file_name'}">
+							        	<span ng-click="order('data.fileSettings.csv.file_name')">CSV</span>
+							        	<span class="sortorder" ng-show="predicate === 'data.fileSettings.csv.file_name'" ng-class="{reverse:reverse}"></span>
+							        </li>
+							        <li ng-class="{ 'active': predicate === 'author.full_name'}">
+							        	<span ng-click="order('author.full_name')">Author</span>
+							        	<span class="sortorder" ng-show="predicate === 'author.full_name'" ng-class="{reverse:reverse}"></span>
+							        </li>
+							        <li ng-class="{ 'active': predicate === 'datetime_updated'}">
+							        	<span ng-click="order('datetime_updated')">Last Updated</span>
+							        	<span class="sortorder" ng-show="predicate === 'datetime_updated'" ng-class="{reverse:reverse}"></span>
+							        </li>
+							        <li class="ml-20">
+							        	<div class="toolbar-icon-bg" id="toolbar-search">
+									        <div class="input-group">
+								            	<span class="input-group-btn"><button class="btn" type="button"><i class="ti ti-search"></i></button></span>
+												<input ng-model="searchText" type="text" class="form-control" placeholder="Search...">
+											</div>
+									    </div>
+							        </li>
+							    </ul>
+							</div>
+					        <div class="panel-ctrls">
+					        	<span tooltip="Select All" class="text-icon">
+						        	<input ng-click="selectAllFiles(selectAll);" ng-model="selectAll" type="checkbox">
+						        </span>
+					        	<span tooltip="Delete" class="button-icon has-bg">
+					        		<i ng-click="deleteAllFiles()" class="ti ti-trash"></i>
+					        	</span>
+					        </div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div ng-show="displayView('list')" class="container-fluid">
+		    <div class="row">
+		        <div class="col-md-12">
+					<div class="panel panel-default" data-widget='{"draggable": "false"}'>
+						<div class="panel-body scroll-pane panel-no-padding" style="height: 65vh;">
+							<div class="scroll-content">
+				                <table class="table table-hover table-striped">
+				                    <thead></thead>
+				                    <tbody>
+				                        <tr ng-repeat="file in files | filter:searchText | orderBy:predicate:reverse">
+				                            <td width="120">
+				                            	<img class="thumbnail" alt="file.data.fileSettings.thumbnail" data-ng-src="app/assets/img/data-thumbnail.png">
+				                            </td>
+				                            <td>
+				                            	<span tooltip="View File">
+				                            		<i class="fa fa-file-excel-o"></i> <b>{{ file.file_name }}</b>
+				                            	</span><br>
+				                            	<span tooltip="http://{{ file.bucket }}.s3.amazonaws.com/{{ file.file_path }}">
+				                            		<i class="fa fa-file-excel-o"></i><a class="link" data-ng-href="http://{{ file.bucket }}.s3.amazonaws.com/{{ file.file_path }}"> {{ file.full_path | characters:35 }}</a>
+				                            	</span>
+				                            </td>
+				                            <td>
+				                            	<span tooltip="Last Author">
+				                            		<i class="ti-user"></i> {{ file.author.full_name }}
+				                            	</span><br>
+				                            	<span tooltip="Last Updated">
+				                            		<i class="ti-time"></i> {{ file.datetime_updated | date:'medium'}}
+				                            	</span>
+				                            </td>
+				                            <td>
+				                            	<span tooltip="Charts">
+				                            		<i class="ti-pie-chart"></i> 4 charts
+				                            	</span>
+				                            </td>
+				                            <td width="150">
+				                            	<ul class="list-actions">
+				                            		<li tooltip="New chart">
+				                            			<span class="icon-stack">
+														  <i class="ti-pie-chart"></i>
+														  <i class="fa fa-plus-circle" style="left: -4px; top: 0px;"></i>
+														</span>
+				                            		</li>
+				                            		<li tooltip="Replace">
+				                            			<span ng-click="replaceFile(file)" class="icon-stack">
+														  <i class="ti-file"></i>
+														  <i class="fa fa-refresh"></i>
+														</span>
+				                            		</li>
+				                            		<li tooltip="Delete">
+				                            			<i ng-click="deleteFile(file)" class="ti-trash"></i>
+				                            		</li>
+				                            		<li>
+				                            			<label tooltip="Select">
+							                            	<input ng-click="selectFile(file)" type="checkbox" ng-checked="selected(file)">
+							                            </label>
+						                            </li>
+						                        </ul>
+				                            </td>
+				                        </tr>
+				                    </tbody>
+				                </table>
+							</div>
+						</div>
+					</div>
+		        </div>
+			</div>
+		</div>
+
+		<div ng-show="displayView('grid')" class="container-fluid mt-20" style="clear: both;">
+			<div class="row">
+				<div class="col-sm-4" ng-repeat="file in files | filter:searchText | orderBy:predicate:reverse">
+	                <div class="panel panel-default" style="visibility: visible">
+						<div class="panel-heading">
+							<div class="panel-ctrls pull-left">
+					        	<span class="button-icon has-bg">
+					        		<i class="ti-time"></i>
+					        	</span>
+					        	<span tooltip="Last User" class="button-icon has-bg">
+					        		<i class="ti-user"></i>
+					        	</span>
+					        	<span tooltip="Download CSV" class="button-icon has-bg">
+					        		<i class="fa fa-file-excel-o"></i>
+					        	</span>
+					        	<span tooltip="View File" class="button-icon has-bg">
+					        		<i class="ti-pie-file"></i>
+					        	</span>
+	                    	</div>
+	                        <div class="panel-ctrls">
+					        	<span tooltip="Select" class="text-icon">
+						        	<input ng-click="selectFile(file)" type="checkbox" ng-checked="selected(file)" type="checkbox">
+						        </span>
+					        	<span tooltip="Delete" class="button-icon has-bg">
+					        		<i ng-click="deleteFile(file)" class="ti-trash"></i>
+					        	</span>
+					        	<span tooltip="Edit" class="button-icon has-bg">
+					        		<i class="ti ti-pencil-alt"></i>
+					        	</span>
+					        	<span tooltip="Share" class="button-icon has-bg">
+					        		<i ng-click="shareFile(file.id)" class="ti-share"></i>
+					        	</span>
+					        </div>
+						</div>
+						<div class="panel-body">
+							<div style="height: 100%; width: inherit;">
+		                        <img style="width: 275px;" data-ng-src="app/assets/img/data.png" />
+		                    </div>
+						</div>
+					</div>
+	            </div>
+			</div>
+		</div>
+	</div>
+</div>

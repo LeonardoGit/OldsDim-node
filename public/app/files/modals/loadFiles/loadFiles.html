@@ -1,0 +1,16 @@
+<div class="sweet">
+	<div class="modal-header modal-header-icon">
+		<div ng-show="loading">
+			<i class="fa fa-spinner fa-spin load"></i>
+		</div>
+		<div ng-hide="loading">
+			<i ng-show="loadSuccess" class="fa fa-file-excel-o load-success"></i>
+			<i ng-show="loadError" class="fa fa-exclamation-circle load-error"></i>
+		</div>
+		<h2>Loading Files</h2>
+	</div>
+	<div class="modal-body">
+		<div class="message">{{ message }}</div>
+		<button ng-show="!loading" ng-click="close()"  class="btn confirm ng-hide" tabindex="1">OK</button>
+	</div>
+</div>

@@ -1,0 +1,33 @@
+<div class="sweet">
+	<div class="modal-header modal-header-icon">
+		<i ng-hide="(loading || uploadSuccess || uploadError)" class="fa fa-file-excel-o load"></i>
+		<div ng-show="loading">
+			<i class="fa fa-spinner fa-spin load"></i>
+			<h2>Uploading File</h2>
+		</div>
+		<div ng-hide="loading">
+			<i ng-show="uploadSuccess" class="fa fa-check-circle-o load-success"></i>
+			<i ng-show="uploadError" class="fa fa-exclamation-circle load-error"></i>
+			<h2>Replace File</h2>
+		</div>
+	</div>
+	<div class="modal-body">
+		<div class="message">{{ message }}</div>
+		<div ng-hide="uploadSuccess" class="input-group">
+                <span class="input-group-btn">
+                    <span class="btn btn-file">
+                        Browse&hellip; <input type="file" name="file" type="file" file-upload>
+                    </span>
+                </span>
+                <input type="text" class="form-control" readonly>
+            </div>
+        </div>
+	    <span ng-hide="uploadSuccess">
+			<button ng-click="close()"  class="btn cancel" tabindex="1">Cancel</button>
+			<button ng-disabled="(loading || !file)" ng-click="replaceFile()"  class="btn confirm" tabindex="1">Upload</button>
+		</span>
+		<span ng-show="uploadSuccess">
+			<button ng-click="close()"  class="btn confirm" tabindex="1">OK</button>
+		</span>
+	</div>
+</div>

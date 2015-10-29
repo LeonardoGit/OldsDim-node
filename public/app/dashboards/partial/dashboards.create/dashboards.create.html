@@ -1,0 +1,78 @@
+<div class="page-content" ng-controller="DashboardsCreateCtrl" class="mainview-animation animated">
+    <ul class="list-actions pull-left">
+        <li>
+            <input type="text" class="form-control width-400" ng-model="dashboardTitle" placeholder="Dashboard Title">
+        </li>
+    </ul>
+
+    <ul class="list-actions pull-right">
+		<li>
+			<button ng-click="saveDashboard()" class="btn btn-success">
+				<i class="ti-check"></i> Save
+			</button>
+		</li>
+    </ul>
+
+    <ul class="list-actions pull-right">
+        <li>
+            <button ng-click="addChart()" class="btn btn-default">
+                <i class="ti-pie-chart"></i> Add Chart
+            </button>
+        </li>
+        <li>
+            <button ng-click="addText()" class="btn btn-default">
+                <i class="ti-smallcap"></i> Add Text
+            </button>
+        </li>
+        <li>
+            <button ng-click="addTheme()" class="btn btn-default">
+                <i class="ti-settings"></i> Theme Setting
+            </button>
+        </li>
+    </ul>
+
+    <div ng-show="!loading">
+	    <div class="container-fluid">
+		    <div class="row">
+		        <div class="col-md-12">
+
+					<div gridster="gridsterOpts">
+					    <ul>
+					        <li gridster-item="tile" ng-repeat="tile in dashboardTiles" ng-style="tile.style">
+					        	<div class="tile-container">
+						        	<div ng-if="tile.chartConfig" class="grid-chart-container">
+										<dim-charts chart-config="tile.chartConfig"></dim-charts>
+									</div>
+									<div ng-if="tile.text" class="grid-text-container">
+										<p ng-bind-html="tile.text"></p>
+									</div>
+									<!-- Top menu -->
+									<span class="tile-settings">
+										<ul class="list-inline">
+											<li ng-show="tile.text" tooltip="Edit" ng-click="editText(tile)">
+												<span class="ti-smallcap"></span>
+											</li>
+											<li ng-show="tile.chartConfig" tooltip="Edit" ng-click="editChart(tile)">
+												<span class="ti-pie-chart"></span>
+											</li>
+											<li tooltip="Delete" ng-click="deleteTile(tile)">
+												<span class="ti-trash"></span>
+											</li>
+											<li tooltip="Settings" ng-click="openTileSettings(tile)">
+												<span class="ti-settings"></span>
+											</li>
+										</ul>
+									</span>
+									<!-- Corner stretch icon -->
+									<span class="ti-arrows-corner"></span>
+								</div>
+					        </li>
+					    </ul>
+					</div>
+
+		        </div>
+		    </div>
+		</div>
+	</div>
+
+</div>

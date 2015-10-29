@@ -1,0 +1,30 @@
+<div class="sweet">
+    <div class="modal-header modal-header-icon">
+        <i ng-hide="saveSuccess" class="fa fa-group load-success"></i>
+        <div ng-hide="loading">
+            <i ng-show="saveSuccess" class="fa fa-check-circle-o load-success"></i>
+            <i ng-show="saveError" class="fa fa-group load-error"></i>
+            <h2>New Group</h2>
+        </div>
+    </div>
+    <div class="modal-body">
+        <div class="message">{{ message }}</div>
+        <div ng-hide="saveSuccess" class="input-group" style="width: 100%;">
+            <div class="row">
+                <div class="col-sm-2"></div>
+                <div class="col-sm-8">
+                    <input type="text" name="group" ng-model="newGroup">
+                </div>
+                <div class="col-sm-2"></div>
+            </div>
+        </div>
+    </div>
+	    <span ng-hide="saveSuccess">
+			<button ng-click="$dismiss()"  class="btn cancel" tabindex="1">Cancel</button>
+			<button ng-disabled="!newGroup" ng-click="save()"  class="btn confirm" tabindex="1">Save</button>
+		</span>
+		<span ng-show="saveSuccess">
+			<button ng-click="close()"  class="btn confirm" tabindex="1">OK</button>
+		</span>
+</div>
+</div>

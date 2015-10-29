@@ -1,0 +1,76 @@
+<div class="page-content" ng-controller="MembersListCtrl" class="mainview-animation animated">
+    <ol class="breadcrumb">
+		<li><a href="#/">ALVARA</a></li>
+		<li class="active">Members</li>
+	</ol>
+
+	<div class="container-fluid">
+
+		<div class="row">
+			<div class="col-md-12">
+				<div class="panel panel-transparent" style="visibility: visible; opacity: 1; display: block; transform: translateY(0px);">
+					<div class="panel-heading">
+						<h2>Members</h2>
+					</div>
+					<div class="panel-body">
+						<div class="panel" style="visibility: visible; opacity: 1; display: block; transform: translateY(0px);">
+							<div class="panel-body no-padding">
+								<table class="table">
+									<tr style="font-weight: bold">
+                                        <td style="width:25%">First Name</td>
+										<td style="width:25%">Last Name</td>
+										<td style="width:20%">Email</td>
+										<td style="width:20%">Role</td>
+										<td style="width:10%">Edit</td>
+									</tr>
+									<tr ng-repeat="member in group.members">
+                                        <td>
+										    <span editable-text="member.first_name" e-name="first_name" e-form="rowform" e-required>
+										        {{ member.first_name }}
+										    </span>
+                                        </td>
+                                        <td>
+                                            <span editable-text="member.last_name" e-name="last_name" e-form="rowform" e-required>
+                                                {{ member.last_name }}
+                                            </span>
+                                        </td>
+                                        <td>
+                                            <span editable-text="member.email" e-name="email" e-form="rowform">
+                                                {{ member.email }}
+                                            </span>
+                                        </td>
+                                        <td>
+                                            <span editable-select="member.role" e-name="role" e-form="rowform" e-ng-options="r.id as r.text for r in roles">
+                                                {{ showRole(member) }}
+                                            </span>
+                                        </td>
+                                        <td style="white-space: nowrap">
+                                            <!-- form -->
+                                            <form editable-form name="rowform" onbeforesave="updateMember($data, member.user_id)" ng-show="rowform.$visible" class="form-buttons form-inline">
+                                                <button type="submit" ng-disabled="rowform.$waiting" class="btn btn-sm btn-primary">
+                                                    Save
+                                                </button>
+                                                <button type="button" ng-disabled="rowform.$waiting" ng-click="rowform.$cancel()" class="btn btn-sm btn-default">
+                                                    Cancel
+                                                </button>
+                                            </form>
+                                            <ul ng-show="!rowform.$visible" class="list-actions">
+                                                <li tooltip="Edit" ng-click="rowform.$show()">
+                                                    <i class="ti-pencil-alt"></i>
+                                                </li>
+                                                <li tooltip="Delete">
+                                                    <i ng-click="deleteMember(member.user_id)" class="ti-trash"></i>
+                                                </li>
+                                            </ul>
+                                        </td>
+									</tr>
+                                </table>
+							</div>
+						</div>
+						<button class="btn btn-default" ng-click="addMember()">Add Member</button>
+					</div>
+				</div>
+		</div>
+	</div>    <!-- container-fluid -->
+
+</div>

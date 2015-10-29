@@ -1,0 +1,72 @@
+/* Component LESS */
+@import "partial/dashboards.create/dashboards.create.less";
+@import "partial/dashboards.list/dashboards.list.less";
+@import "partial/dashboards.share/dashboards.share.less";
+@import "modals/loadDashboards/loadDashboards.less";
+@import "modals/shareDashboards/shareDashboards.less";
+@import "modals/tileSettings/tileSettings.less";
+@import "modals/textEditor/textEditor.less";
+/* Add Component LESS Above */
+
+/* GLOBAL Dashboard LESS */
+.gridster {
+    .gridster-item {
+        .tile-container {
+            height: 100%;
+            margin: 0;
+            padding: 0px;
+            visibility: visible;
+
+            .grid-text-container {
+                color: inherit;
+                
+                div,p,li,h1,h2,h3,h4,h5,h6 {
+                    color: inherit;
+                }
+            }
+
+            .tile-settings, .ti-arrows-corner {
+                display: none;
+            }
+
+            .tile-settings { 
+	            .list-inline > li {
+	            	padding-left: 0;
+	            }
+	        }
+        }
+
+        .grid-chart-container {
+        	width: 100%;
+        	height: 100%;
+        }
+    }
+    .gridster-item:hover  {
+        .tile-container {
+            .tile-settings {
+                display: block;
+                position: absolute;
+                right: 2px;
+                top: 2px;
+
+                ul.list-inline li span {
+                	cursor: pointer;
+                }
+            }
+
+            .ti-arrows-corner {
+                display: block;
+                position: absolute;
+                right: 2px;
+                bottom: 2px;
+            }
+        }
+        .handle-se {
+            border-color: transparent !important;
+        }       
+    }
+}
+
+.colorpicker .dropdown-menu {
+	min-width: 146px !important	
+}

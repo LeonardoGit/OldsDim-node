@@ -1,0 +1,23 @@
+<div class="sweet">
+	<div class="modal-header modal-header-icon">
+		<i class="ti-layout-grid3 showcase load"></i>
+		<h2>Share!</h2>
+	</div>
+	<div class="modal-body">
+		<div ng-init="showUrl = true">
+			<span ng-click="share.type = 'url'" ng-class="{'active': share.type === 'url'}" class="link mr-10">
+				<i class="ti-world"></i> URL
+			</span>
+			 <span ng-click="share.type = 'iframe'" ng-class="{'active': share.type === 'iframe'}" class="link">
+			 	<i class="fa fa-code"></i> Iframe
+			</span>
+			<div class="input-group">
+		     	<input ng-show="share.type === 'url'" type="text" class="form-control" value="{{ share.value['url'] }}" readonly style="position: absolute; width: 331px;">
+		      <input ng-show="share.type === 'iframe'" type="text" class="form-control" value="{{ share.value['iframe'] }}" readonly style="position: absolute; width: 331px;">
+		      <span class="input-group-btn">
+		        <button id="copy-share-url" ng-click="$dismiss()" data-clipboard-text="{{ share.value[share.type] }}" class="btn confirm" style="margin-top: 9px;" type="button">Copy</button>
+		      </span>
+		    </div>
+		</div>
+	</div>
+</div>

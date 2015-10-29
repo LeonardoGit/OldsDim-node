@@ -1,0 +1,21 @@
+<div>
+	<div class="modal-header">
+	</div>
+	<div class="modal-body">
+		<form name="joinForm">
+			<auto:fields fields="schema" data="tile" options="options"></auto:fields>
+			<div class="text form-group">
+				<label class="control-label">Background Image</label>
+				<div class="input-group">
+	                <span class="input-group-btn">
+	                    <span class="btn btn-file">
+	                        Browse&hellip; <input type="file" name="file" type="file" file-upload>
+	                    </span>
+	                </span>
+	                <input type="text" class="form-control" readonly>
+	            </div>
+	        </div>
+			<button ng-click="close()" class="btn btn-default btn-lg">SAVE</button>
+		</form>
+	</div>
+</div>

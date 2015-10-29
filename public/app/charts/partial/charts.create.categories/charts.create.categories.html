@@ -1,0 +1,268 @@
+<form id="chart-create-categories" name="chartcreatecategories" ng-controller="ChartsCreateCategoriesCtrl">
+  <div ng-show="chartConfigSettings.type.type === 'table'" class="form-group">
+    <label>Columns <i data-toggle="tooltip" tooltip-placement="right" tooltip="{{ chartConfigSettings.type.colTooltip }}" class="fa fa-question-circle"></i></label>
+    <div class="checkbox checkbox-default pull-right">
+      <input id="selectAll" data-ng-click="selectAllTableColumns($event);" class="styled" type="checkbox">
+      <label for="selectAll">
+        Select All
+      </label>
+    </div>
+    <div class="help-text">{{ chartConfigSettings.type.colHelpText }}</div>
+    <div class="list-group">
+      <a href="#" data-ng-click="selectTableColumn($event, column);" class="list-group-item" ng-repeat="column in columns">{{ column.name }}
+        <i ng-show="selectedTableColumn(column);" class="fa fa-check pull-right"></i>
+      </a>
+    </div>
+  </div>
+  <div class="form-group chart-config-options">
+    <label class="label-title">{{ chartConfigSettings.type.shortTitle }} Options</label>
+    <div ng-show="chartConfigSettings.type.type === 'table'">
+      <div class="clearfix"></div>
+      <div ng-disabled="table.columns.length == 0">
+        <label>Column Formats <i data-toggle="tooltip" tooltip-placement="right" tooltip="{{ chartConfigSettings.type.colFormatTooltip }}" class="fa fa-question-circle"></i></label>
+        <div class="help-text">{{ chartConfigSettings.type.colFormatHelpText }}</div>
+        <div class="btn-group btn-wide">
+          <button type="button" class="btn btn-default dropdown-toggle" aria-expanded="true" placeholder="Select Column To Format" id="ddlCF_ColList">
+            {{ formattedTableColumn.name }}<span class="caret pull-right"></span>
+          </button>
+          <ul class="dropdown-menu" role="menu">
+            <li ng-repeat="column in table.columns">
+              <a ng-click="selectFormattedTableColumn(column);" href="javascript:void(0);">{{ column.name }}</a>
+            </li>
+          </ul>
+        </div>
+        <div class="btn-group btn-wide">
+          <button type="button" class="btn btn-default dropdown-toggle" aria-expanded="true" id="ddlCF_ColFormatList">
+            {{ formattedTableColumn.columnformat.name }}<span class="caret pull-right"></span>
+          </button>
+          <ul class="dropdown-menu" role="menu">
+            <li ng-repeat="columnformat in tableColumnFormats">
+              <a ng-click="selectTableColumnFormat(columnformat);" href="javascript:void(0);">{{ columnformat.name }}</a>
+            </li>
+          </ul>
+        </div>
+        <div class="form-horizontal" ng-show="formattedTableColumn.columnformat.name == 'number'">
+          <div class="form-group col-xs-6" style="padding-top: 2px;" role="form">
+            <div class="col-xs-6">
+              <label>decimal places</label>
+            </div>
+            <div class="col-xs-6">
+              <input class="form-control" data-ng-model="formattedTableColumn.columnformat.decimalplaces" type="number" max="{{ formattedTableColumn.columnformat.maxfractionallength }}" min="0" required name="numberdecimalplaces" ng-blur="blurFormatDecimalPlaces()">
+            </div>
+          </div>
+          <div class="form-group col-xs-6" role="form">
+            <div class="col-xs-5">
+              <label>negative numbers</label>
+            </div>
+            <div class="col-xs-7">
+              <div class="radio" ng-repeat="negativeformat in tableColumnFormatArray[formattedTableColumn.columnformat.negativenumbersarray]" ng-click="selectNegativeNumber(negativeformat);">
+                <input type="radio" value="{{ negativeformat }}" name="numbernegativenumbers" id="rbNumberNegativeNumbers">
+                <label class="radio">{{ negativeformat }}</label>
+              </div>
+            </div>
+          </div>
+          <div class="alert alert-warning col-xs-12" ng-show="chartcreatecategories.numberdecimalplaces.$dirty && chartcreatecategories.numberdecimalplaces.$invalid">
+            <p class="help-block" ng-show="chartcreatecategories.numberdecimalplaces.$error.required" translate="charts.messages.validate.decimalplaces.required">
+              Decimal places field is required
+            </p>
+            <p class="help-block" ng-show="chartcreatecategories.numberdecimalplaces.$error.max" translate="charts.messages.validate.decimalplaces.max">
+              Decimal places can be between 0 and 18
+            </p>
+            <p class="help-block" ng-show="chartcreatecategories.numberdecimalplaces.$error.min" translate="charts.messages.validate.decimalplaces.min">
+              Decimal places can be between 0 and 18
+            </p>
+            <p class="help-block" ng-show="chartcreatecategories.numberdecimalplaces.$error.number" translate="charts.messages.validate.decimalplaces.number">
+              Decimal places can be a number only
+            </p>
+          </div>
+        </div>
+        <div class="form-horizontal" ng-show="formattedTableColumn.columnformat.name == 'currency'">
+          <div class="btn-group btn-wide">
+            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
+              {{ formattedTableColumn.columnformat.symbol }}<span class="caret pull-right"></span>
+            </button>
+            <ul class="dropdown-menu" role="menu">
+              <li ng-repeat="symbol in tableColumnFormatArray[formattedTableColumn.columnformat.symbolarray]">
+                <a ng-click="selectCurrencyFormatSymbol(symbol);" href="javascript:void(0);">{{ symbol }}</a>
+              </li>
+            </ul>
+          </div>
+          <div class="form-group col-xs-6" style="padding-top: 2px;" role="form">
+            <div class="col-xs-6">
+              <label>decimal places</label>
+            </div>
+            <div class="col-xs-6">
+              <input class="form-control" data-ng-model="formattedTableColumn.columnformat.decimalplaces" type="number" max="{{ formattedTableColumn.columnformat.maxfractionallength }}" min="0" required name="currencydecimalplaces" ng-blur="blurFormatDecimalPlaces()">
+            </div>
+          </div>
+          <div class="form-group col-xs-6" role="form">
+            <div class="col-xs-5">
+              <label for="rbNumberNegativeNumbers2">negative numbers</label>
+            </div>
+            <div class="col-xs-7">
+              <div class="radio" ng-repeat="negativeformat in tableColumnFormatArray[formattedTableColumn.columnformat.negativenumbersarray]" ng-click="selectNegativeNumber(negativeformat);">
+                <input type="radio" value="{{ negativeformat }}" name="numbernegativenumbers" id="rbNumberNegativeNumbers2">
+                <label class="radio">{{ negativeformat }}</label>
+              </div>
+            </div>
+          </div>
+          <div class="alert alert-warning col-xs-12" ng-show="chartcreatecategories.currencydecimalplaces.$dirty && chartcreatecategories.currencydecimalplaces.$invalid">
+            <p class="help-block" ng-show="chartcreatecategories.currencydecimalplaces.$error.required" translate="charts.messages.validate.decimalplaces.required">
+              Decimal places field is required
+            </p>
+            <p class="help-block" ng-show="chartcreatecategories.currencydecimalplaces.$error.max" translate="charts.messages.validate.decimalplaces.max">
+              Decimal places can be between 0 and 18
+            </p>
+            <p class="help-block" ng-show="chartcreatecategories.currencydecimalplaces.$error.min" translate="charts.messages.validate.decimalplaces.min">
+              Decimal places can be between 0 and 18
+            </p>
+            <p class="help-block" ng-show="chartcreatecategories.currencydecimalplaces.$error.number" translate="charts.messages.validate.decimalplaces.number">
+              Decimal places can be a number only
+            </p>
+          </div>
+        </div>
+        <div class="form-horizontal" ng-show="formattedTableColumn.columnformat.name == 'date'">
+          <div class="btn-group btn-wide">
+            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
+              <input ng-change="onChangeSelectDateTimeFormatType()" ng-model="formattedTableColumn.columnformat.typename" type="text" value="" /><span class="caret pull-right"></span>
+            </button>
+            <ul class="dropdown-menu" role="menu">
+              <li ng-repeat="type in tableColumnFormatArray[formattedTableColumn.columnformat.typearray]">
+                <a ng-click="selectDateTimeFormatType(type);" href="javascript:void(0);">{{ type.name }}</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="form-horizontal" ng-show="formattedTableColumn.columnformat.name == 'time'">
+          <div class="btn-group btn-wide">
+            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
+              {{ formattedTableColumn.columnformat.typename }}<span class="caret pull-right"></span>
+            </button>
+            <ul class="dropdown-menu" role="menu">
+              <li ng-repeat="type in tableColumnFormatArray[formattedTableColumn.columnformat.typearray]">
+                <a ng-click="selectDateTimeFormatType(type);" href="javascript:void(0);">{{ type.name }}</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="form-horizontal" ng-show="formattedTableColumn.columnformat.name == 'percentage'">
+          <div class="form-group col-xs-12" style="padding-top: 2px;" role="form">
+            <div class="col-xs-6" style="padding-top:8px;">
+              <label>decimal places</label>
+            </div>
+            <div class="col-xs-6">
+              <input class="form-control" data-ng-model="formattedTableColumn.columnformat.decimalplaces" type="number" max="{{ formattedTableColumn.columnformat.maxfractionallength }}" min="0" required name="percentagedecimalplaces" ng-blur="blurFormatDecimalPlaces()">
+            </div>
+          </div>
+          <div class="alert alert-warning col-xs-12" ng-show="chartcreatecategories.percentagedecimalplaces.$dirty && chartcreatecategories.percentagedecimalplaces.$invalid">
+            <p class="help-block" ng-show="chartcreatecategories.percentagedecimalplaces.$error.required" translate="charts.messages.validate.decimalplaces.required">
+              Decimal places field is required
+            </p>
+            <p class="help-block" ng-show="chartcreatecategories.percentagedecimalplaces.$error.max" translate="charts.messages.validate.decimalplaces.max">
+              Decimal places can be between 0 and 18
+            </p>
+            <p class="help-block" ng-show="chartcreatecategories.percentagedecimalplaces.$error.min" translate="charts.messages.validate.decimalplaces.min">
+              Decimal places can be between 0 and 18
+            </p>
+            <p class="help-block" ng-show="chartcreatecategories.percentagedecimalplaces.$error.number" translate="charts.messages.validate.decimalplaces.number">
+              Decimal places can be a number only
+            </p>
+          </div>
+        </div>
+        <div class="form-horizontal" ng-show="formattedTableColumn.columnformat.name == 'fraction1'">
+          <div class="btn-group btn-wide">
+            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
+              {{ formattedTableColumn.columnformat.typename }}<span class="caret pull-right"></span>
+            </button>
+            <ul class="dropdown-menu" role="menu">
+              <li ng-repeat="type in tableColumnFormatArray[formattedTableColumn.columnformat.typearray]">
+                <a ng-click="selectDateTimeFormatType(type);" href="javascript:void(0);">{{ type.name }}</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="form-horizontal" ng-show="formattedTableColumn.columnformat.name == 'scientific'">
+          <div class="form-group col-xs-12" style="padding-top: 2px;" role="form">
+            <div class="col-xs-6" style="padding-top:8px;">
+              <label>decimal places</label>
+            </div>
+            <div class="col-xs-6">
+              <input class="form-control" data-ng-model="formattedTableColumn.columnformat.decimalplaces" type="number" max="{{ formattedTableColumn.columnformat.maxfractionallength }}" min="0" required name="scientificgedecimalplaces" ng-blur="blurFormatDecimalPlaces()">
+            </div>
+          </div>
+          <div class="alert alert-warning col-xs-12" ng-show="chartcreatecategories.scientificgedecimalplaces.$dirty && chartcreatecategories.scientificgedecimalplaces.$invalid">
+            <p class="help-block" ng-show="chartcreatecategories.scientificgedecimalplaces.$error.required" translate="charts.messages.validate.decimalplaces.required">
+              Decimal places field is required
+            </p>
+            <p class="help-block" ng-show="chartcreatecategories.scientificgedecimalplaces.$error.max" translate="charts.messages.validate.decimalplaces.max">
+              Decimal places can be between 0 and 18
+            </p>
+            <p class="help-block" ng-show="chartcreatecategories.scientificgedecimalplaces.$error.min" translate="charts.messages.validate.decimalplaces.min">
+              Decimal places can be between 0 and 18
+            </p>
+            <p class="help-block" ng-show="chartcreatecategories.scientificgedecimalplaces.$error.number" translate="charts.messages.validate.decimalplaces.number">
+              Decimal places can be a number only
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div ng-show="chartConfigSettings.type.type === 'pie'">
+      <div class="checkbox checkbox-default form-checkbox inline">
+        <input id="semiCircle" data-ng-model="chartConfigSettings.type.semiCircle" class="styled" type="checkbox">
+        <label for="semiCircle">
+          Semi Circle
+        </label>
+      </div>
+      <div class="checkbox checkbox-default form-checkbox inline">
+        <input id="donut" data-ng-model="chartConfigSettings.type.donut" class="styled" type="checkbox">
+        <label for="donut">
+          Donut
+        </label>
+      </div>
+    </div>
+  </div>
+  <div ng-show="chartConfigSettings.type.type !== 'table'">
+    <div class="form-group">
+      <label for="mergedata">Categories <i data-toggle="tooltip" tooltip-placement="right" tooltip="{{ chartConfigSettings.type.catTooltip }}" class="fa fa-question-circle"></i></label>
+      <div class="checkbox checkbox-default pull-right">
+        <input id="mergedata" data-ng-model="chartConfigSettings.mergeData" class="styled" type="checkbox">
+        <label for="mergedata">
+          Sum Across Categories
+        </label>
+      </div>
+      <div class="help-text">{{ chartConfigSettings.type.catHelpText }}</div>
+      <div class="list-group">
+        <a href="#" ng-click="select($event, column, 'categories');" class="list-group-item" ng-repeat="column in categories">{{ column.name }}
+          <i ng-show="selected(column, 'categories');" class="fa fa-check pull-right"></i>
+        </a>
+      </div>
+    </div>
+
+    <div ng-show="showSubcat()" class="form-group">
+      <label for="drilldown">Subcategories <i data-toggle="tooltip" tooltip-placement="right" tooltip="{{ chartConfigSettings.type.subcatTooltip }}" class="fa fa-question-circle"></i></label>
+      <div ng-show="showDrilldown()" class="checkbox checkbox-default pull-right">
+        <input id="drilldown" data-ng-model="chartConfigSettings.drilldown" class="styled" type="checkbox">
+        <label for="drilldown">
+          Drilldown <i class="fa fa-question-circle" data-toggle="tooltip" tooltip-placement="left" tooltip="{{ chartConfigSettings.type.drillTooltip }}"></i>
+        </label>
+      </div>
+      <div class="help-text">{{ chartConfigSettings.type.subcatHelpText }}</div>
+      <div class="list-group">
+        <a href="#" ng-click="select($event, column, 'subcategories');" class="list-group-item" ng-repeat="column in subcategories">{{ column.name }}
+          <i ng-show="selected(column, 'subcategories');" class="fa fa-check pull-right"></i>
+        </a>
+      </div>
+    </div>
+    <div class="form-group">
+      <label>Values <i data-toggle="tooltip" tooltip-placement="right" tooltip="{{ chartConfigSettings.type.valueTooltip }}" class="fa fa-question-circle"></i></label>
+      <div ng-if="chartConfigSettings.type.multiselect" class="pull-right"><a ng-click="selectAll('values');">select all</a></div>
+      <div class="help-text">{{ chartConfigSettings.type.valueHelpText }}</div>
+      <div class="list-group">
+        <a href="#" ng-click="select($event, column, 'values');" class="list-group-item" ng-repeat="column in values">{{ column.name }}
+          <i ng-show="selected(column, 'values');" class="fa fa-check pull-right"></i>
+        </a>
+      </div>
+    </div>
+  </div>
+</form>

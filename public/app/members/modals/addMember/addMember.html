@@ -1,0 +1,45 @@
+<div class="sweet">
+    <div class="modal-header modal-header-icon">
+        <i ng-hide="saveSuccess" class="ti-user load-success"></i>
+        <div ng-hide="loading">
+            <i ng-show="saveSuccess" class="fa fa-check-circle-o load-success"></i>
+            <i ng-show="saveError" class="ti-user load-error"></i>
+            <h2>New Member</h2>
+        </div>
+    </div>
+    <div class="modal-body">
+        <div class="message">{{ message }}</div>
+        <div ng-hide="saveSuccess" class="input-group" style="width: 100%;">
+            <div class="row">
+                <div class="col-sm-8 col-sm-offset-2">
+                    <input type="text" placeholder="First Name" class="form-control input-sm" ng-model="newMember.first_name">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-8 col-sm-offset-2">
+                    <input type="text" placeholder="Last Name" class="form-control input-sm" ng-model="newMember.last_name">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-8 col-sm-offset-2">
+                    <input type="text" placeholder="Email" class="form-control input-sm" ng-model="newMember.email">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-8 col-sm-offset-2">
+                    <select class="form-control input-sm" ng-model="newMember.role">
+                        <option value="user">user</option>
+                        <option value="admin">admin</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </div>
+	    <span ng-hide="saveSuccess">
+			<button ng-click="close()"  class="btn cancel" tabindex="1">Cancel</button>
+			<button ng-disabled="!newMember.firstName && !newMember.lastName && !newMember.email" ng-click="save()" class="btn confirm" tabindex="1">Save</button>
+		</span>
+		<span ng-show="saveSuccess">
+			<button ng-click="close()" class="btn confirm" tabindex="1">OK</button>
+		</span>
+</div>

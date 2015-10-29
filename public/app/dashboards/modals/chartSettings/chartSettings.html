@@ -1,0 +1,51 @@
+<div class="sweet">
+    <div class="modal-header">
+        <h4 class="modal-title text-left"><i class="ti-pie-chart"></i> Chart Using</h4>
+    </div>
+    <div class="modal-body">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="panel panel-default">
+                    <div class="panel-body file-chart-table" style="max-height: 400px; overflow-x: scroll;">
+                        <div class="inner-icon right-icon search-files">
+                            <div class="input-icon input-group-sm text-right">
+                                <input type="text"  ng-model="searchText" class="form-control" placeholder="Search" style="visibility: visible; width: 40%; display: inline-block;"/>
+                            </div>
+                        </div>
+                        <br/>
+
+                        <div ng-show="loading">
+                            <i class="fa fa-spinner fa-spin text-muted load" style="font-size: 100px; visibility: visible;"></i>
+                            <br>
+                            <h2 style="visibility: visible;">Loading Charts</h2>
+                        </div>
+
+                        <table class="table table-hover" ng-init="init();" style="visibility: visible" ng-hide="loading">
+                            <tbody>
+                            <tr ng-repeat="chart in charts | filter:searchText"
+                                class="repeat-animation"
+                                data-ng-class="{'active' : chart.isSelcted}">
+                                <td class="text-left">
+                                    <img class="thumbnail" src="{{chart.data.chartSettings.thumbnail}}">
+                                </td>
+                                <td class="text-left">
+                                    <i class="ti-pie-chart"></i>
+                                    <span class="highlight">{{chart.data.chartSettings.title}}</span>
+                                </td>
+                                <td class="text-right">
+                                    <button ng-click="chartSelect(chart)" class="btn btn-primary-alt" style="padding: 11px 17px;">Select</button>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-dismiss="modal" ng-click="modalClose();">Close</button>
+    </div>
+</div>

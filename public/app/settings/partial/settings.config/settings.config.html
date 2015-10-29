@@ -1,0 +1,113 @@
+<div class="page-content" ng-controller="SettingsConfigCtrl" class="mainview-animation animated">
+    <ol class="breadcrumb">
+		<li><a href="#/">Dashboard</a></li>
+		<li>Form</li>
+		<li class="active">Form Components</li>
+	</ol>
+
+	<div class="row" style="position: absolute; right: 15px; top: 0;">
+		<ul class="list-actions pull-right">
+	        <li>
+	            <button ng-click="deleteGroup()" class="btn btn-default">
+	                <i class="ti-trash"></i> Delete Group
+	            </button>
+	        </li>
+	    </ul>
+	</div>
+
+	<div class="container-fluid" ng-controller="SettingsConfigCtrl">
+
+	<div data-widget-group="group1">
+
+		<div class="panel panel-default" data-widget='{"draggable": "false"}'>
+			<div class="panel-heading">
+				<h2>Roles & Permissions</h2>
+				<div class="panel-ctrls" data-actions-container="" data-action-collapse='{"target": ".panel-body"}'></div>
+			</div>
+			<div class="panel-body">
+				<form action="" class="form-horizontal row-border" ng-model="permissionForm">
+					<div class="form-group">
+						<label class="col-sm-2 control-label">Role:</label>
+						<div class="col-sm-8">
+							<select class="form-control" ng-model="currentRole">
+                                <option ng-value="role.name" ng-repeat="role in roles">{{ role.name }}</option>
+							</select>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-sm-2 control-label">Permissions:</label>
+						<div class="col-sm-8">
+                            <table class="table table-bordered ng-scope">
+                                <thead>
+                                    <tr>
+                                        <th class="ng-binding ng-scope text-center">pages</th>
+                                        <th ng-repeat="heading in data.headings" class="ng-binding ng-scope text-center">{{ heading.name }}</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="row in data.rows" class="ng-scope" ng-if="row.roleName == currentRole">
+                                        <td class="ng-binding text-center">{{ row.permissionName }}</td>
+                                        <td ng-repeat="permissionValue in row.permissionValues" class="ng-binding text-center">
+                                            <input type="checkbox" ng-disabled="(currentRole === 'admin' || currentRole === 'user')" ng-model="permissionValue.value" ng-true-value="1" ng-false-value="0" ng-click="changePermission(permissionValue.permissionId, row.roleId, row.permissionName)">
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+						</div>
+					</div>
+				</form>
+			</div>
+			<div class="panel-footer">
+				<div class="row">
+					<div class="col-sm-8 col-sm-offset-2 text-center">
+						<button class="btn-success btn" ng-click="createRole()">Create Role</button>
+						<button class="btn-primary btn" ng-click="submitPermissionForm()">Save</button>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="panel panel-default" data-widget='{"draggable": "false"}'>
+			<div class="panel-heading">
+				<h2>Theme Settings</h2>
+				<div class="panel-ctrls" data-actions-container="" data-action-collapse='{"target": ".panel-body"}'></div>
+			</div>
+			<div class="panel-body">
+				<form action="" class="form-horizontal row-border" ng-model="themeForm">
+					<div class="form-group">
+						<label class="col-sm-2 control-label">Dashboard:</label>
+						<div class="col-sm-8">
+							<select class="form-control" data-ng-options="theme._id as theme.name for theme in dashboardThemes" data-ng-model="dashboardTheme">
+							</select>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-sm-2 control-label">Chart:</label>
+						<div class="col-sm-8">
+							<select class="form-control" data-ng-options="theme._id as theme.name for theme in chartThemes" data-ng-model="chartTheme">
+							</select>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-sm-2 control-label">Table:</label>
+						<div class="col-sm-8">
+							<select class="form-control" data-ng-options="theme._id as theme.name for theme in tableThemes" data-ng-model="tableTheme">
+							</select>
+						</div>
+					</div>
+				</form>
+			</div>
+			<div class="panel-footer">
+				<div class="row">
+					<div class="col-sm-8 col-sm-offset-2 text-center">
+						<button class="btn-primary btn" ng-click="submitThemeForm()">Save</button>
+					</div>
+				</div>
+			</div>
+		</div>
+
+	</div>
+
+	</div> <!-- container-fluid -->
+</div>
+

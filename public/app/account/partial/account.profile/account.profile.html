@@ -1,0 +1,104 @@
+<div ng-controller="AccountProfileCtrl">
+  <ol class="breadcrumb ng-scope">
+    <li><a href="#/">Dashboard</a></li>
+    <li>Extras</li>
+    <li class="active">User Profile</li>
+  </ol>
+  <div class="container-fluid ng-scope">
+    <div data-widget-group="group1" ng-init="selectedTab='0'" class="ui-sortable">
+      <div class="row">
+        <div class="col-sm-3">
+          <div class="panel panel-profile" style="visibility: visible; opacity: 1; display: block; transform: translateY(0px);">
+            <div class="panel-body">
+              <img masked-image="" data-ng-src="{{ auth.profile.picture }}" alt="..." class="img-circle">
+              <div class="name">{{ auth.profile.name }}</div>
+              <div class="info">{{ auth.profile.email }}</div>
+              <ul class="list-inline text-center">
+                <li>
+                  <button ng-click="deleteAccount()" class="btn btn-default">
+                    <i class="ti-trash"></i> Delete Account
+                  </button>
+                </li>
+              </ul>
+            </div>
+          </div><!-- panel -->
+        </div><!-- col-sm-3 -->
+        <div class="col-sm-9">
+          <div class="tab-content">
+            <div class="tab-pane active">
+              <div class="panel panel-default" style="visibility: visible; opacity: 1; display: block; transform: translateY(0px);">
+                <div class="panel-heading">
+                  <h2></h2>
+                </div>
+                <div class="panel-body">
+                  <div class="row">
+                    <div class="col-md-12 col-sm-12 price-plan-list">
+                      <h4>Simple plans that grow with your business</h4>
+                      <div class="col-sm-3 item">
+                        <div class="price-wrapper user">
+                          <p class="caption">entrepenuer</p>
+                          <div class="price">
+                            <span class="dollar-sign">$</span>
+                            <span class="rate">19</span>
+                            <span class="time">/mo</span>
+                          </div>
+                          <div class="details">
+                            <p>1 User</p>
+                            <p>10 Charts</p>
+                            <p>2 Dashboards</p>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-sm-3 item">
+                        <div class="price-wrapper small-business">
+                          <p class="caption">small business</p>
+                          <div class="price">
+                            <span class="dollar-sign">$</span>
+                            <span class="rate">49</span>
+                            <span class="time">/mo</span>
+                          </div>
+                          <div class="details">
+                            <p>5 Users</p>
+                            <p>Unlimited Charts</p>
+                            <p>Unlimited Dashboards</p>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-sm-3 item">
+                        <div class="price-wrapper big-business">
+                          <p class="caption">big business</p>
+                          <div class="price">
+                            <span class="dollar-sign">$</span>
+                            <span class="rate">359</span>
+                            <span class="time">/mo</span>
+                          </div>
+                          <div class="details">
+                            <p>40 Users</p>
+                            <p>Unlimited Charts</p>
+                            <p>Unlimited Dashboards</p>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-sm-3 item">
+                        <div class="price-wrapper enterprise">
+                          <p class="caption">enterprise</p>
+                          <div class="price">
+                            <span class="rate text">Call For Pricing</span>
+                          </div>
+                          <div class="details">
+                            <p>50+ Users</p>
+                            <p>Unlimited Charts</p>
+                            <p>Unlimited Dashboards</p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div><!-- .tab-content -->
+        </div><!-- col-sm-9 -->
+    </div>
+  </div> <!-- container-fluid -->
+</div>

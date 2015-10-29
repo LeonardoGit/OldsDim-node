@@ -1,0 +1,105 @@
+<header
+	id="topnav"
+	class="navbar ng-hide {{getLayoutOption('topNavThemeClass')}}"
+	ng-class="{'navbar-fixed-top': getLayoutOption('fixedHeader'), 'navbar-static-top': !getLayoutOption('fixedHeader')}"
+	ng-controller="HeaderCtrl",
+	role="banner"
+	ng-show="!layoutLoading"
+	ng-cloak>
+	<!-- <a id="leftmenu-trigger" ng-click="toggleLeftBar()"></a> -->
+	<!-- <a id="rightmenu-trigger" ng-click="toggleRightBar()"></a> -->
+
+
+	<div class="logo-area">
+		<span id="trigger-sidebar" class="toolbar-trigger toolbar-icon-bg" ng-click="toggleLeftBar()" ng-show="!getLayoutOption('layoutHorizontal') &&  getLayoutOption('leftbarShown')">
+			<a data-toggle="tooltips" data-placement="right" title="Toggle Sidebar">
+				<span class="icon-bg">
+					<i class="ti ti-menu"></i>
+				</span>
+			</a>
+		</span>
+		
+		<a class="navbar-brand" href="#/">Dashboard In a Minute</a>
+		<div class="toolbar-icon-bg hidden-xs" ng-show="auth.isAuthenticated">
+	        <div class="btn-group navbar-btn">
+                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                    {{ selectedGroup.name }} <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu" style="left: 0;" role="menu">
+                    <li ng-repeat="group in userGroups">
+                    	<a ng-click="selectGroup(group);" href="#">{{ group.name }}</a>
+                    </li>
+                    <li class="divider"></li>
+                    <li style="padding: 0px 8px; display: block;">
+	                    <button type="button" class="btn btn-primary btn-block" ng-click="createGroup()">Create Group</button>
+                   </li>
+                </ul>
+            </div>
+	    </div>
+	</div>
+
+	<ul ng-hide="auth.isAuthenticated" class="nav navbar-nav pull-right toolbar">
+        <li class="toolbar-icon-bg">
+			<a href="" ng-click="login()" ><span class="icon-bg"><i class="ti-user"></i></span></a>
+		</li>
+	</ul>
+	
+	<ul ng-show="auth.isAuthenticated" class="nav navbar-nav pull-right toolbar">
+
+        <li class="toolbar-icon-bg hidden-xs" toggle-fullscreen>
+            <a href="" class="toggle-fullscreen"><span class="icon-bg"><i class="ti ti-fullscreen"></i></span></i></a>
+        </li>
+		
+		<li class="dropdown" ng-show="!isLoggedIn">
+			<a href="#/extras-login2" style="font-size: 14px"><i class="fa fa-sign-in"></i> Log in</a>
+		</li>
+
+	  <li class="dropdown toolbar-icon-bg" dropdown ng-controller="NotificationsController" ng-show="isLoggedIn">
+		<a href dropdown-toggle class="dropdown-toggle">
+			<span class="icon-bg"><i class="ti ti-bell"></i></span>
+			<span class="badge badge-primary" ng-if="unseenCount>0" ng-bind="unseenCount"></span>
+		</a>
+		<div class="dropdown-menu animated notifications arrow">
+			<div class="topnav-dropdown-header">
+				<span>Notifications</span>
+			</div>
+			<ul class="media-list scrollthis" scrollable>
+				<li ng-repeat="item in notifications" class="media {{item.class}}">
+					<a href="#">
+						<div class="media-left">
+							<span class="notification-icon" ng-if="item.thumb==undefined"><i class="{{item.iconClasses}}"></i></span>
+							<img class="img-circle avatar" ng-if="item.thumb!==undefined" ng-src="{{item.thumb}}" alt="" />
+						</div>
+						<div class="media-body">
+							<h4 class="notification-heading" ng-if="item.thumb==undefined">{{item.text}}</h4>
+							<h4 class="notification-heading" ng-if="item.thumb!==undefined" ng-bind-html="item.text"></h4>
+							<span class="notification-time">{{item.time}}</span>
+						</div>
+					</a>
+				</li>
+			</ul>
+			<div class="topnav-dropdown-footer">
+				<a href="#/">See all notifications</a>
+			</div>
+		</div>
+	  </li>
+	  <li class="dropdown" ng-show="isLoggedIn" dropdown>
+		<a href class="dropdown-toggle username" dropdown-toggle><img data-ng-src="{{ auth.profile.picture }}" alt="{{ auth.profile.name }}" /></a>
+		<ul class="dropdown-menu animated userinfo arrow" >
+			<li>
+				<a ui-sref="account.profile">
+					<i class="ti ti-user"></i><span>Profile</span><span class="badge badge-info pull-right">80%</span>
+				</a>
+			</li>
+			<li><a href="#/"><i class="ti ti-panel"></i><span>Account</span></a></li>
+			<li><a href="#/"><i class="ti ti-settings"></i><span>Settings</span></a></li>
+			<li class="divider"></li>
+			<li><a href="#/"><i class="ti ti-stats-up"></i><span>Earnings</span></a></li>
+			<li><a href="#/"><i class="ti ti-view-list-alt"></i><span>Statement</span></a></li>
+			<li><a href="#/"><i class="ti ti-money"></i><span>Withdrawals</span></a></li>
+			<li class="divider"></li>
+			<li ng-click="logout()"><a href=""><i class="ti ti-shift-right"></i><span>Logout</span></a></li>
+		</ul>
+	  </li>
+	</ul>
+</header>
